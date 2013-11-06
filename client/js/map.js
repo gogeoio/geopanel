@@ -7,7 +7,7 @@ var baseMap = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 
 var host = "http://m{s}.gogeo.com:9090";
 var document_name = "db1";
-var collection_name = "localidades";
+var collection_name = "estados";
 var mapkey = "169476c3-09d5-4ec5-974d-fee9a01dac08";
 
 var base_url = host + "/map/" + document_name + "/" + collection_name + "/{z}/{x}/{y}/tile";

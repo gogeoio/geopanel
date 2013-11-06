@@ -26,7 +26,7 @@ module Services
 
     namespace "companies" do
       
-      desc "Find document in GoGeo"
+      desc "Find document in GoGeo. Used in typeahead"
       params do
         requires :q, type: String, desc: "Term to search"
         optional :field, type: String, default: "nm_nng", desc: "Field to match"
@@ -59,7 +59,7 @@ module Services
         response
       end
 
-      desc "List documents in GoGeo"
+      desc "List documents in GoGeo. Used in grid."
       params do
         optional :page, type: Integer, min_size: 1, default: 1
         optional :limit, type: Integer, min_size: 1, max_size: 30, default: 10
@@ -79,10 +79,15 @@ module Services
         resource = get_resource
         begin
           response = resource[url].get().force_encoding("utf-8")
-          header "Pagination-Limit", response.headers[:pagination_limit]
-          header "Pagination-Offset", response.headers[:pagination_offset]
-          header "Pagination-TotalCount", response.headers[:pagination_totalcount]
-          
+          limit = response.headers[:pagination_limit]
+          header "Pagination-Limit", limit
+
+          offset = response.headers[:pagination_offset]
+          header "Pagination-Offset", offset
+
+          total = response.headers[:pagination_totalcount]
+          header "Pagination-TotalCount", total
+
           response = JSON.parse(response)
         rescue URI::InvalidURIError => e
           error!(e, 400)
@@ -90,7 +95,7 @@ module Services
           error!(e, 500)
         end
 
-        response
+        {data: response, total: total}
       end
       desc "Find a document by id"
       params do
