@@ -1,0 +1,7 @@
+# A sample Guardfile
+# More info at https://github.com/guard/guard#readme
+
+guard 'rack', :port => 8080 do
+  watch('Gemfile.lock')
+  watch(%r{^(config|lib|app)/.*})
+end

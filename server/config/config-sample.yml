@@ -1,0 +1,15 @@
+defaults: &defaults
+  <<: *defaults
+  gogeo_api: app.gogeo.io
+  gogeo_map: maps.gogeo.io
+
+development:
+  <<: *defaults
+  gogeo_api: localhost:9292
+  gogeo_map: localhost:9090
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
