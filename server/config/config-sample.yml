@@ -2,6 +2,10 @@ defaults: &defaults
   <<: *defaults
   gogeo_api: app.gogeo.io
   gogeo_map: maps.gogeo.io
+  database_id: 
+  collection_id: 
+  apikey: 
+  mapkey: 
 
 development:
   <<: *defaults
