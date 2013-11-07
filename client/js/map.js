@@ -16,7 +16,20 @@ var tile_url = base_url + ".png?mapkey=" + mapkey;
 var collection_layer = L.tileLayer(tile_url, {
   maxZoom: 18,
   subdomains: "1234"
-}).addTo(map);
+});
+
+// map.addLayer(collection_layer);
+var searchLayer = null;
+// map.addControl( new L.Control.Search({layer: searchLayer}) );
+
+//jsonp request to 3rd party service, implements Geocode Searching using OSM API
+map.addControl( new L.Control.Search({
+    url: 'http://nominatim.openstreetmap.org/search?format=json&q={s}',
+    jsonpParam: 'json_callback',
+    propertyName: 'display_name',
+    propertyLoc: ['lat','lon'],
+    circleLocation: true
+}) );
 
 var utf_url = base_url + ".json?mapkey=" + mapkey + "&callback={cb}";
 
@@ -40,7 +53,7 @@ utfGrid.on('click',
   }
 );
 
-map.addLayer(utfGrid);
+// map.addLayer(utfGrid);
 
 var baseMaps = {
   "BaseMap": baseMap

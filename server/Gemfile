@@ -6,7 +6,8 @@ gem 'json'
 
 gem 'rest-client'
 gem 'builder', '~> 3.1.0'
-gem "rack-contrib", :git => "https://github.com/rack/rack-contrib.git", :require => "rack/contrib"
+gem 'rack-server-pages', :require => 'rack-server-pages'
+# gem "rack-contrib", :git => "https://github.com/rack/rack-contrib.git", :require => "rack/contrib"
 
 group :development do
   gem 'guard'

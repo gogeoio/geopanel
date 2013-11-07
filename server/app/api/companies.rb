@@ -29,7 +29,7 @@ module Services
       desc "Find document in GoGeo. Used in typeahead"
       params do
         requires :q, type: String, desc: "Term to search"
-        optional :field, type: String, default: "nm_nng", desc: "Field to match"
+        optional :field, type: String, default: "name", desc: "Field to match"
         optional :page, type: Integer, min_size: 1, default: 1
         optional :limit, type: Integer, min_size: 1, max_size: 30, default: 10
       end

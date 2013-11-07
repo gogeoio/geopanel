@@ -1,5 +1,8 @@
+String.prototype.capitalize = function() {
+    return this.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
+};
+
 var pageSize = 10;
-var searchBy = null;
 
 var dataSource = new kendo.data.DataSource({
 	serverPaging: true,
@@ -16,23 +19,27 @@ var dataSource = new kendo.data.DataSource({
 				page: $('#grid').data('kendoGrid').pager.options.dataSource._page
 			};
 
+
 			if (data.filter) {
-				// console.log("searchBy", searchBy);
-				params.field = 'nm_nng';
-				params.q = '*' + searchBy + '*';
-				searchBy = null;
-			} else if (searchBy) {
-				var filter = data.filter.filters[0];
-				console.log('filter', JSON.stringify(filter, null, 2));
 				params.q = '';
+				var filters = data.filter.filters;
 
-				if (filter.operator === 'doesnotcontain') {
-					params.q = params.q + '!';
+				for (var i = 0; i < filters.length; i++) {
+					var filter = filters[i];
+					var q = '';
+
+					if (filter.operator === 'doesnotcontain') {
+						q = '!';
+					}
+
+					q = q + filter.value;
+
+					if (filter.operator === 'contains') {
+						params.q = params.q + ' ' + filter.field + ':*' + q + '*';
+					} else if (filter.operator === 'eq') {
+						params.q = params.q + ' ' + filter.field + ':' + q;
+					}
 				}
-
-				params.field = filter.field;
-				params.q = params.q + filter.value;
-				console.log('q', params.q, 'field', params.field);
 			}
 			return params;
 		}
@@ -43,16 +50,57 @@ var dataSource = new kendo.data.DataSource({
 	}
 });
 
+var formatName = function(name) {
+	return name.toLowerCase().capitalize();
+};
+
+var formatCnae = function(cnae) {
+	if (cnae.length > 50) {
+		var words = cnae.split(" ");
+		var size = words.length - 1;
+		while (cnae.length >= 40) {
+			cnae = words.slice(0, size).join(" ");
+			size--;
+		}
+	}
+
+	return cnae;
+}
+
 var columns = [
 	{ 
-		field: 'nm_nng', title: 'Name',
-	    filterable: {
-	      ui: 'filter' // use Kendo UI DateTimePicker
-	    }
-	  },
-	{ field: 'grupo', title: 'Grupo' },
-	{ field: 'pais', title: 'País' },
-	{ field: 'uf', title: 'UF' }
+		field: 'name',
+		title: 'Name',
+		width: 500,
+		template: '#= formatName(name) #'
+	},
+	{
+		field: 'fantasy_name',
+		title: 'Fantasy Name',
+		width: 150,
+		template: '#= formatName(fantasy_name) #'
+	},
+	{
+		field: 'neighborhood',
+		title: 'Neighborhood',
+		width: 120
+	},
+	{
+		field: 'city',
+		title: 'City',
+		width: 150
+	},
+	{
+		field: 'state',
+		title: 'State',
+		width: 80
+	},
+	{
+		field: 'cnae_p_label',
+		title: 'CNAE Primary',
+		width: 110,
+		template: '<div title= "#= cnae_p_label #"> #= formatCnae(cnae_p_label) # </div>'
+	}
 ];
 
 var filterOptions = {
@@ -60,7 +108,8 @@ var filterOptions = {
 	operators: {
 		string: {
 			contains: 'Contains',
-			doesnotcontain: 'Doesn\'t contain'
+			doesnotcontain: 'Doesn\'t contain',
+			equals: 'Equals'
 		}
 	},
 	messages: {
@@ -74,20 +123,6 @@ var grid = $('#grid').kendoGrid({
 	pageable: pageSize,
   	scrollable: false,
   	selectable: true,
-  	filterable: filterOptions,
-  	toolbar: [{
-  		name: 'search',
-  		template: '<input id="search" class="toolbar"/>',
-  		text: 'search'
-  	}]
-});
-
-grid.find("#search").kendoSearchBox({
-	name: "search",
-	change: function(e) {
-		searchBy = e.sender.options.value;
-		var ds = $('#grid').data('kendoGrid').dataSource;
-		ds.fetch();
-		// console.log('change', searchBy, 'ds', ds);
-	}
+  	navigable: true,
+  	filterable: filterOptions
 });

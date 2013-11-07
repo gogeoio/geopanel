@@ -1,0 +1,114 @@
+{
+    "id": "showcase-geopanel",
+    "name": "showcase-geopanel",
+    "path": "/home/roberto/trabalho/produtos/showcase-geopanel",
+    "files": [
+        {
+            "name": "client/map.html",
+            "type": "html",
+            "lib": false,
+            "deps": [],
+            "id": "d67e1d67-f4da-4fd8-b7bd-6a331631cd1b",
+            "page": true
+        },
+        {
+            "name": "client/typeahead.html",
+            "type": "html",
+            "lib": false,
+            "deps": [],
+            "id": "d46c5e50-d494-4ee8-af7d-fa54c0148550",
+            "page": true
+        },
+        {
+            "name": "client/js/grid.js",
+            "type": "js",
+            "lib": false,
+            "deps": [],
+            "id": "53fded0d-6beb-425c-9c6e-6b2fba548e99"
+        },
+        {
+            "name": "client/js/map.js",
+            "type": "js",
+            "lib": false,
+            "deps": [],
+            "id": "70d06e7d-2f98-47ce-ab5d-e7572d48ac8e"
+        },
+        {
+            "name": "client/js/typeahead.js",
+            "type": "js",
+            "lib": false,
+            "deps": [],
+            "id": "7be76dc9-13b2-4b21-b9eb-24647cc8729b"
+        },
+        {
+            "name": "client/styles/kendo.common.css",
+            "type": "css",
+            "lib": false,
+            "deps": [],
+            "id": "f3ca6b50-7063-43c0-883f-f9a12d98ef36"
+        },
+        {
+            "name": "client/styles/kendo.default.css",
+            "type": "css",
+            "lib": false,
+            "deps": [],
+            "id": "2858187c-c675-4360-ab8c-7ad208cdcf54"
+        },
+        {
+            "name": "client/js/jquery/jquery-1.9.1.js",
+            "type": "js",
+            "lib": true,
+            "deps": [],
+            "id": "jquery"
+        },
+        {
+            "name": "client/js/jquery/jquery-2.0.3.js",
+            "type": "js",
+            "lib": true,
+            "deps": [],
+            "id": "jquery"
+        },
+        {
+            "name": "client/js/jquery/jquery.min.js",
+            "type": "js",
+            "lib": true,
+            "deps": [],
+            "id": "jquery"
+        },
+        {
+            "name": "client/js/kendoui/kendo.web.js",
+            "type": "js",
+            "lib": false,
+            "deps": [],
+            "id": "245a57f2-0130-42bf-9920-db745912d4ee"
+        },
+        {
+            "name": "client/js/leaflet/leaflet.js",
+            "type": "js",
+            "lib": false,
+            "deps": [],
+            "id": "3270ae11-6b2a-47e4-80aa-46b809836ec5"
+        },
+        {
+            "name": "client/js/leaflet/leaflet.utfgrid.js",
+            "type": "js",
+            "lib": false,
+            "deps": [],
+            "id": "d833c95b-1807-47af-8758-d2325c76648f"
+        },
+        {
+            "name": "client/styles/leaflet/leaflet.css",
+            "type": "css",
+            "lib": false,
+            "deps": [],
+            "id": "5d07b547-5f87-42db-bb3d-9871618c45ab"
+        },
+        {
+            "name": "client/styles/leaflet/leaflet.ie.css",
+            "type": "css",
+            "lib": false,
+            "deps": [],
+            "id": "cc4a0c0d-f8a4-4562-b53d-6272502c5138"
+        }
+    ]
+}
