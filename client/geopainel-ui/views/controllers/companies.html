@@ -1,0 +1,187 @@
+
+ <div class="app-toolbar-action menu-action">
+  <div class="menu-action-item">
+    <div id="lists-area" size="50">
+      <input id="company-choose" type="text" data-placeholder="Selecione Listas ..." ng-model="selected" ng-bind="selected" />
+    </div>
+  </div>
+</div>
+
+<div id="toolbar" class="row-fluid app-toolbar" ng-hide="showNoListsWarning">
+  <div class="row-fluid" >
+    <div class="span12">
+      <h1>
+        {{selected.collection_name}}
+      </h1>
+    </div>
+  </div>
+
+  <div class="row-fluid">
+    <div class="span12">
+      <p class="muted">
+        <span ng-show="totalCount >= 1" ng-bind="'Base com '"></span>
+        <strong ng-show="totalCount >= 1" ng-bind="totalCount | number:0"></strong>
+        <span ng-show="totalCount >= 1" ng-bind="' Empresa' + (totalCount > 1 && 's' || '')"></span>
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="full-height container-fluid" style="margin-top:165px;">
+  <div class="row-fluid margin-top-20" ng-show="showNoListsWarning">
+    <div class="span12">
+      <div>
+        <img ng-src="/images/tela_empresas_blank_slate.png" alt=""> 
+        <h1 class="floating-text" ng-show="!isAdmin">
+          Nenhuma lista compartilhada com você.<br/>
+        </h1>
+        <h1 class="floating-text" ng-show="isAdmin">
+          Nenhuma lista encontrada.<br/>
+          <small>Contate o Suporte do GeoPainel.</small>
+        </h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="row-fluid" ng-hide="showNoListsWarning">
+    <div class="span12">
+      <div class="list-header-block margin-bottom-0" ng-show="!showListName">
+        <button id="filter-btn-activator" ng-show="isAdmin" class="btn btn-medium" ng-class="collapseFiltering && 'btn-primary'" ng-click="collapseFiltering = !collapseFiltering" title='Filtre as empresas' data-toggle="tooltip">
+          <i class="icon-filter icon-spacing" ng-show="collapseFiltering"></i>
+          Filtros
+          <i class="icon-chevron-up" ng-show="!collapseFiltering"></i>
+        </button>
+      </div>
+
+      <div class="list-header-block margin-bottom-0" style="float:right;" ng-show="isAdmin && isFilter">
+        <small style="font-size:12px; color:#878787;">
+          Filtro com 
+          <span ng-show="filterCount == 0" ng-bind="' Nenhuma Empresa'"></span>
+          <strong ng-show="filterCount >= 1" ng-bind="filterCount | number:0"></strong>
+          <span ng-show="filterCount >= 1" ng-bind="' Empresa' + (filterCount > 1 && 's' || '')"></span>
+        </small>
+      </div>
+    </div>
+  </div>
+
+  <div class="row-fluid" ng-hide="showNoListsWarning" collapse="collapseFiltering">
+    <div id="filtrar-empresas-box" class="span12 margin-top-20">
+      <div class="content-box-title">
+        <h3>Filtrar Empresas</h3>
+      </div>
+
+      <div class="filters filters-bar content-box" >
+        <div class="row-fluid">
+          <div class="span12">
+            <label for="location-cmp-choose">Localização</label>
+            <input id="location-cmp-choose" style="width: 70%" type="text" placeholder="Pesquise por: estado, município, rua, setor" ng-model="currentFilter.location" />
+          </div>
+        </div>
+
+        <br />
+
+        <br />
+
+        <div class="row-fluid">
+         <div class="span9">
+          <label for="cnae-cmp-choose">CNAE(s)</label>
+          <input id="cnae-cmp-choose" style="width: 94%" type="text" placeholder="Pesquise por descrição do cadastro nacional de atividades (CNAE)" ng-model="currentFilter.cnae" />
+        </div>
+
+        <div class="span3">
+          <button id="apply-filters" class="btn btn-medium btn-primary pull-right" style="margin-top:22px; margin-right:0px;" ng-click="clickFilter()" >
+            <i class="icon-ok icon-spacing"></i>
+            Aplicar Filtros
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row-fluid app-popover margin-top-20" ng-hide="showNoListsWarning">
+  <div class="span12">
+    <table class="table table-hover table-striped table-bordered">
+      <thead>
+        <tr>
+          <th class="vert-middle">Empresa</th>
+          <th class="vert-middle">Endereço</th>
+          <th class="vert-middle">CNAE</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr ng-show="isLoading">
+          <td colspan="3" class="center">
+            <h3 style="text-align: center; color: #505050;">
+              <span>Carregando Empresas</span>
+              <br />
+              <img src="/images/loading.gif"/>
+            </h3>
+          </td>
+        </tr>
+
+        <tr ng-show="!isLoading && rows.length == 0">
+          <td colspan="3" class="center">
+            <h3 style="text-align: center; color: #505050;">
+              <span>Nenhuma empresa encontrada</span>
+            </h3>
+          </td>
+        </tr>
+
+        <tr ng-repeat="row in rows" ng-show="!isLoading">
+          <td style="width:40%">
+            <h5 ng-show="row.fantasy_name" ng-bind="row.fantasy_name"></h5>
+
+            <h5 ng-show="row.name && row.fantasy_name">
+              <small ng-bind="row.name"></small>
+            </h5>
+
+            <h5 ng-show="row.name && !row.fantasy_name" ng-bind="row.name"></h5>
+
+            <p class="muted">
+              <small ng-bind="row.cnpj | cnpj"></small>
+            </p>
+          </td>
+          <td style="width:30%">
+            <small>
+              <span ng-show="row.logradouro" ng-bind="row.logradouro + ' - '"></span>
+              <span ng-show="row.number" ng-bind="'Nº' + row.number + ' - '"></span>
+              <br />
+              <span ng-show="row.complemento" ng-bind="row.complemento + '-'"></span>
+              <span ng-show="row.neighborhood" ng-bind="row.neighborhood + ' - '"></span>
+              <span ng-bind="'CEP: ' + row.zipCode"></span>
+            </small>
+            <br />
+            <strong style="font-size:95%;" ng-show="row.city" ng-bind="(row.city | capitalize)  + ' - ' + row.state"></strong>
+          </td>
+          <td style="width:30%">
+            <span ng-show="row.cnae_primario" class="contact-popover label label-success" style="color:#ffffff;">{{ row.cnae_primario }}</span>
+            <br>
+            <span ng-show="row.cnae_p_label" class="contact-popover label label-primary" style="color:#ffffff;">{{ row.cnae_p_label }}</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  <div class="row-fluid pagination-centered" ng-show="!isLoading && (!(currentPage == 0) || !(lastLoadedCount < limit))">
+    <div class="pagination">
+      <ul>
+        <li ng-class="{'disabled': currentPage == 0 }">
+          <span class="btn btn-inverse" ng-click="!(currentPage == 0) && loadPage(currentPage - 1)">
+            <i class="icon-chevron-left"></i>
+            Anterior
+          </span>
+        </li>
+        <li ng-class="{'disabled': (((currentPage + 1) * limit) >= totalCount) }" >
+          <span class="btn btn-inverse" ng-click="!(((currentPage + 1) * limit) >= totalCount) && loadPage(currentPage + 1)">
+            Próximo
+            <i class="icon-chevron-right"></i>
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
+</div>

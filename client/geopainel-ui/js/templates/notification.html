@@ -1,0 +1,20 @@
+
+<div id="notify" ng-show='notificationData.show'>
+	<div class="inner text-left" ng-class="notificationData.type">
+		<a class="close-btn" href="javascript:void(0)" ng-click="notificationData.close()">
+			<i class="icon-remove icon-2x"></i>
+		</a>
+
+		<h2 class="title" ng-bind="notificationData.title"></h2>
+
+		<p class="lead" ng-bind-html-unsafe="notificationData.message"></p>
+
+		<div ng-show="notificationData.actions.length > 0">
+			<br/>
+
+			<p>
+				<button class="btn btn-large action-spacing" ng-repeat="row in notificationData.actions" ng-class="row.class" ng-click="notificationData.execute(row.action)" ng-bind="row.text"></button>
+			</p>
+		</div>
+	</div>
+</div>

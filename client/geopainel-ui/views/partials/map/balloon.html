@@ -1,0 +1,53 @@
+<section>
+
+  <div style="height:auto; max-width:400px; padding:5px 2px 5px 10px;">
+    <button class="close" ng-click="hideBalloon(true)">&times;</button>
+    <div style="height: 60px;">
+      <h4 style="color:#78348b;">{{ (data.fantasy_name) && data.fantasy_name || data.name }}</h4>
+    </div>
+  </div>
+
+  <hr style="margin: -5px 0px 5px 0px">
+
+  <div style="position:relative;overflow-y:auto; height:190px; max-width:385px; padding:10px;">
+    <address class="map-balloon-info" style="font-size: 90%; font-size: 12px; font-family: 'Open Sans', sans-serif;">
+      <ul class="unstyled">
+        <li ng-show="data.name">
+          <strong ng-show="data.name">Razão Social: </strong><span>{{ data.name }}</span>
+        </li>
+        
+        <li ng-show="data.fantasy_name">
+          <strong ng-show="data.fantasy_name">Nome Fantasia: </strong><span>{{ data.fantasy_name }}</span>
+        </li>
+
+        <li ng-show="data.cnpj">
+          <strong ng-show="data.cnpj">CNPJ: </strong><span>{{ data.cnpj | formatCnpj}}</span>
+        </li>
+      </ul>
+      <hr>
+      <ul class="unstyled">
+        <li>
+          <strong>Endereço: </strong>
+          <span ng-show="data.logradouro" ng-bind="data.logradouro + ' - '"></span>
+          <span ng-show="data.number" ng-bind="'Nº' + data.number + ' - '"></span>
+        </li>
+
+        <li>
+          <span ng-show="data.complemento" ng-bind="data.complemento + '-'"></span>
+          <span ng-show="data.neighborhood" ng-bind="data.neighborhood + ' - '"></span>
+          <span ng-show="data.zipCode" ng-bind="'CEP: ' + data.zipCode"></span>
+        </li>
+
+        <li>
+          {{ data.city | capitalize }} - {{ data.state }}
+        </li>
+      </ul>
+      <hr>
+      <div>
+        <span ng-show="data.cnae_p_label && data.cnae_primario" style="margin:0 2px 0 0; cursor: pointer;" class="balloon-popover2 label label-success" title="{{ data.cnae_p_label }}">
+        {{ data.cnae_primario }}
+        </span>
+      </div>
+    </address>
+  </div>
+</section>

@@ -1,0 +1,32 @@
+<div id="side-menu" class="page-sidebar" style="height: {{ screenHeight }}" ng-class="sidebarClass">
+  <ul class="accordion">
+    <li>
+      <a ng-click="toogleSidebar()" title="Contrair/Expandir Menu" data-toggle="tooltip" data-placement="right">
+        <i class="icon-reorder icon-big" ng-show="sidebarOpened"></i>
+        <i class="icon-caret-left icon-big" ng-show="!sidebarOpened"></i>
+        <span class="title">GeoPanel</span>
+      </a>
+    </li>
+
+    <li>
+      <a class="menu-name" href="/#/users" title='Usuários' data-toggle="tooltip" data-placement="right" ng-class="routeStartsWith('/users') && 'active' || ''">
+        <i class="icon-user icon-big"></i>
+        <span class="title" ng-bind="user.name | cut_string:7"></span>
+      </a>
+    </li>
+
+    <li ng-repeat="menu in menus.side">
+      <a class="menu-name" title="{{menu.name}}" data-toggle="tooltip" data-placement="right" ng-href="{{'/#' + menu.url}}" ng-class="routeStartsWith(menu.url) && 'active' || ''">
+        <i class="{{ menu.icon }} icon-big"></i>
+        <span class="title" ng-bind="menu.name"></span>
+      </a>
+    </li>
+
+    <li>
+      <a href="javascript:" title="Sair" data-toggle="tooltip" data-placement="right" class="top-menu signout-btn" ng-click="logout()">
+        <i class="icon-off icon-big"></i>
+        <span class="title">Sair</span>
+      </a>
+    </li>
+  </ul>
+</div>

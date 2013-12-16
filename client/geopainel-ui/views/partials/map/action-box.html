@@ -1,0 +1,88 @@
+<div class="map-box-organization" style="height:auto;" ng-style="{'bottom': (!collapse.search && '0' || 'auto'), 'background-color': (!collapse.search && '#ffffff' || 'transparent')}">
+
+    <div class="box-caption" ng-click="collapse.search = !collapse.search" >
+        <strong>Empresas</strong>
+        <i class="pull-right" ng-class="(!collapse.search) && 'icon-minus' || 'icon-plus'"></i>
+    </div>
+
+    <div collapse="collapse.search" style="background-color:#ffffff;" >
+        <div class="menu-content">
+            <div id="action-box-header">
+                <div id="lists-area">
+                    <h4 class="center">Selecione Listas</h4>
+                    <input id="company-map-choose" type="text" data-placeholder="Selecione Listas ..." ng-model="company.selected" />
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="anti-noob" style="margin-top: -5px;">
+                <h4 class="center">Empresas da Lista</h4>
+                <div class="input">
+                    <input id="searchCompany" class="span12" style="padding: 0px 10px;" ng-model="company.query" type="text" placeholder="Pesquisar Empresas ..." app-keyup="{'enter': 'doSearch(0)'}">
+                </div>
+            </div>
+            <div ng-show="showNoListsWarning" style="margin:10px 0; position:relative;">
+                <img ng-src="/images/tela_mapa_blank_slate.png" alt="Nenhuma empresa listada">
+                <h4 class="floating-text-map-view" ng-show="!isAdmin">
+                    Nenhuma lista compartilhada com você.<br/>
+                </h4>
+            </div>
+
+            <div class="map-box-table" style="margin:5px 0;" ng-style="{'height': listHeight    + 'px'}">
+                <ul>
+                    <li ng-repeat="row in companies" style="border-bottom:1px solid #dcdcdc; font-size:80%;">
+                        <div class="info-container" ng-click="showOnMap(row, true, true)">
+                                <h6 ng-show="row.fantasy_name" ng-bind="row.fantasy_name"></h6>
+                                <h6 ng-show="row.name && row.fantasy_name">
+                                    <small ng-bind="row.name"></small>
+                                </h6>
+                                <h6 ng-show="row.name && !row.fantasy_name" ng-bind="row.name">
+                                </h6>
+
+                                <strong ng-show="row.city" ng-bind="(row.city | capitalize)    + ' - ' + row.state"></strong>
+                                <span class="pull-right" style="margin-right: 5px;">{{$index + ((page - 1) * config.limit) + 1}}</span>
+                        </div>
+                    </li>
+
+                    <li ng-show="!isLoading && companies.length > 0" style="line-height: 0px; background: #ffffff;">
+                        <div class="row-fluid pagination-centered">
+                        <div class="pagination">
+                            <ul style="background: #ffffff;">
+                                <li ng-class="{ 'disabled': page == 1 }" style="background-color: #FFFFFF;">
+                                    <span class="btn btn-inverse small" style="width: 5%;" ng-click="loadPage(-1)">
+                                        <i class="icon-chevron-left"></i>
+                                    </span>
+                                </li>
+                                <li ng-class="{ 'disabled':  page >= totalPages }" style="background-color: #FFFFFF;">
+                                    <span class="btn btn-inverse small" style="width: 5%;" ng-click="loadPage(+1)">
+                                        <i class="icon-chevron-right"></i>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    </li>
+
+                    <li ng-show="isLoading">
+                        <div class="center">
+                            <h6 style="text-align: center; color: #505050;">
+                                <span>Carregando Empresas</span>
+                                <br />
+                                <img src="/images/loading.gif"/>
+                            </h6>
+                        </div>
+                    </li>
+
+                    <li ng-show="!isLoading && companies.length == 0">
+                        <div class="center">
+                            <h6 style="text-align: center;">
+                                <span>Nenhuma Empresa Encontrada</span>
+                            </h6>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

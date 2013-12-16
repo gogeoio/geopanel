@@ -3,5 +3,6 @@
 
 guard 'rack', :port => 8080 do
   watch('Gemfile.lock')
-  watch(%r{^(config|lib|app)/.*})
+  watch('config.ru')
+  watch(%r{^(config|lib|app|geopainel)/.*})
 end

@@ -1,0 +1,126 @@
+<html>
+<head>
+  <title>OpenLayers - Teste</title>
+
+  <script src="/home/roberto/trabalho/produtos/showcase-geopanel/client/geopainel-ui/libs/openlayers/2.12/OpenLayers.js"></script>
+
+</head>
+<body>
+
+  <div>
+    <button id="click" onclick="load();">Click</button>
+  </div>
+
+  <div id="map"></div>
+
+  <script type="text/javascript">
+
+    function load() {
+      console.log("load");
+    }
+
+    function extendsMap(targetMap) {
+
+      targetMap.panTo = function (lonlat) {
+        if (!this.panTween) {
+          this.panTween = new OpenLayers.Tween(this.panMethod);
+        }
+        var center = this.getCachedCenter();
+
+        if (lonlat.equals(center)) {
+          return;
+        }
+
+        var from = this.getPixelFromLonLat(center);
+        var to = this.getPixelFromLonLat(lonlat);
+        var vector = { x: to.x - from.x, y: to.y - from.y };
+        var last = { x: 0, y: 0 };
+
+        this.panTween.start( { x: 0, y: 0 }, vector, this.panDuration, {
+          callbacks: {
+            eachStep: OpenLayers.Function.bind(function(px) {
+              var x = px.x - last.x,
+                y = px.y - last.y;
+              this.moveByPx(x, y);
+              last.x = Math.round(px.x);
+              last.y = Math.round(px.y);
+            }, this),
+            done: OpenLayers.Function.bind(function(px) {
+              this.moveTo(lonlat);
+              this.dragging = false;
+              this.events.triggerEvent("moveend");
+            }, this)
+          }
+        });
+      }
+    }
+
+    function nokiaLayers(base) {
+      return [
+        "http://1.maptile.lbs.ovi.com/maptiler/v2/maptile/newest/" + base + "/${z}/${x}/${y}/256/png8?token=123&app_id=mBCJzriKRMXN-4giYVBc",
+        "http://2.maptile.lbs.ovi.com/maptiler/v2/maptile/newest/" + base + "/${z}/${x}/${y}/256/png8?token=123&app_id=mBCJzriKRMXN-4giYVBc",
+        "http://3.maptile.lbs.ovi.com/maptiler/v2/maptile/newest/" + base + "/${z}/${x}/${y}/256/png8?token=123&app_id=mBCJzriKRMXN-4giYVBc",
+        "http://4.maptile.lbs.ovi.com/maptiler/v2/maptile/newest/" + base + "/${z}/${x}/${y}/256/png8?token=123&app_id=mBCJzriKRMXN-4giYVBc"
+      ];
+    }
+
+    var baseLayer = new OpenLayers.Layer.XYZ(
+      "BaseLayer", nokiaLayers('normal.day'), {numZoomLevels: 18}
+    );
+    var mapLayers = [baseLayer];
+
+    var mercator = new OpenLayers.Projection('EPSG:900913');
+    var wgs84 = new OpenLayers.Projection('EPSG:4326');
+
+    var map = new OpenLayers.Map({
+        div: 'map'
+      , projection: mercator
+      , layers: mapLayers
+      , controls: [
+          new OpenLayers.Control.TouchNavigation({
+              dragPanOptions: {
+                  enableKinetic: true
+              }
+          }),
+          new OpenLayers.Control.Navigation({
+            mouseWheelOptions: {
+              interval: 50,
+              cumulative: true
+            },
+            dragPanOptions: {
+              enableKinetic: true
+            }
+          }),
+          new OpenLayers.Control.Zoom(),
+          new OpenLayers.Control.LayerSwitcher()
+        ]
+    });
+
+    var longitude = -49.25933128592078;
+    var latitude = -16.670975386982306;
+
+    // mapHelper.center($scope.map, $scope.config.center.longitude, $scope.config.center.latitude, $scope.config.zoom);
+    // var coordinate = new OpenLayers.LonLat(longitude, latitude);
+    // var coordinate = new OpenLayers.LonLat(latitude, longitude);
+    var coordinate = new OpenLayers.LonLat(50, 25);
+    coordinate = coordinate.transform(map.getProjectionObject(), wgs84);
+    
+    // extendsMap(map);
+    map.setCenter(coordinate, 5);
+
+    var layer_name = "50k_empresas";
+    var urls = ["http://localhost:9090/map/db1/" + layer_name + "/${z}/${x}/${y}/tile.png?mapkey=123&_=" + Math.random()];
+    var layer = new OpenLayers.Layer.XYZ(
+      layer_name, urls, {
+        numZoomLevels: 18,
+        isBaseLayer: false,
+        visibility: true
+    });
+
+    map.addLayer(layer);
+    // map.zoomToMaxExtent();
+
+  </script>
+
+</body>
+</html>

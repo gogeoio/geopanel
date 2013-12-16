@@ -1,0 +1,30 @@
+{
+  "side": [
+    {
+      "icon": "icon-building",
+      "name": "Empresas",
+      "tooltip": "Empresas",
+      "url": "/companies"
+    },
+    {
+      "icon": "icon-map-marker",
+      "name": "Mapa",
+      "tooltip": "Mapa",
+      "url": "/map"
+    }
+  ],
+  "top": [
+    {
+      "icon": "icon-shopping-cart",
+      "name": "Store",
+      "tooltip": "Store tooltip",
+      "url": "/home"
+    },
+    {
+      "icon": "icon-question-sign",
+      "name": "Ajuda",
+      "tooltip": "Ajuda tooltip",
+      "url": "/home"
+    }
+  ]
+}

@@ -6,6 +6,12 @@ defaults: &defaults
   collection_id: 
   apikey: 
   mapkey: 
+  logger:
+    name: showcase
+    level: debug
+    appenders:
+      stdout: true
+      file: ./showcase.log
 
 development:
   <<: *defaults

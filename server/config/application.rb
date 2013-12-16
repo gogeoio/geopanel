@@ -1,7 +1,7 @@
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'app/api'))
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'app/models'))
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
-$LOAD_PATH.unshift(File.dirname(__FILE__))
+$: << File.join(File.dirname(__FILE__), '..', 'app/api')
+$: << File.join(File.dirname(__FILE__), '..', 'app/models')
+$: << File.join(File.dirname(__FILE__), '..', '.')
+$: << File.dirname(__FILE__)
 
 require 'grape'
 require 'boot'
