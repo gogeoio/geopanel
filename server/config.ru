@@ -9,18 +9,27 @@ if ENV['RACK_ENV'] == 'development'
   use Rack::Aggregate
 end
 
-# require 'rack-server-pages'
 use Rack::Static,
-  urls: [ "/css", "/images", "/js", "/libs", "/views", "/index.html", "favicon.ico" ],
-  root: File.expand_path('../../client/geopainel-ui', __FILE__),
-  index: "index.html"
+  urls: [
+        "/js",
+        "/css",
+        "/libs",
+        "/logos",
+        "/views",
+        "/images",
+        "/styles",
+        "/cuia.png",
+        "/font-awesome",
+        "/public/js",
+        "/public/logos",
+        "/public/cuia.png",
+        "/public/favicon.ico",
+        "/public/not-authorized.html"
+    ],
+  root: [File.expand_path('../../client/geopainel-ui', __FILE__)],
+  index: "/index.html"
 
 # STDERR.reopen "/dev/null", "a"
-
-# use Rack::ServerPages do |config|
-#   dir = File.expand_path('../../client/geopainel-ui', __FILE__)
-#   config.view_path = dir
-# end
 
 run Services::Root
 

@@ -1,0 +1,37 @@
+development:
+  # Configure available database sessions. (required)
+  sessions:
+    # Defines the default session. (required)
+    default:
+      database: showcase_development
+      hosts:
+        - localhost:27017
+  options:
+    raise_not_found_error: false
+test:
+  sessions:
+    default:
+      database: showcase_test
+      hosts:
+        - localhost:27017
+      options:
+        # In the test environment we lower the retries and retry interval to
+        # low amounts for fast failures.
+        max_retries: 1
+        retry_interval: 0
+  options:
+    raise_not_found_error: false
+
+production:
+  sessions:
+    default:
+      database: showcase
+      hosts:
+        - localhost:27017
+      options:
+        # In the test environment we lower the retries and retry interval to
+        # low amounts for fast failures.
+        max_retries: 10
+        retry_interval: 0
+  options:
+    raise_not_found_error: false

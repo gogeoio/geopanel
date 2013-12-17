@@ -3,12 +3,14 @@ source 'https://rubygems.org'
 gem 'grape'
 gem 'settingslogic'
 gem 'json'
-
+gem 'mongoid', github: 'mongoid/mongoid'
+gem 'bcrypt-ruby', '~> 3.1.2'
 gem 'rest-client'
 gem 'builder', '~> 3.1.0'
-gem 'rack-server-pages'
 gem 'puma'
 gem 'logging'
+
+gem 'rack-server-pages'
 
 group :development do
   gem 'guard'

@@ -1,6 +1,19 @@
+GIT
+  remote: git://github.com/mongoid/mongoid.git
+  revision: e3a55c2a68895723f876dd1daaa86ec39b085d38
+  specs:
+    mongoid (4.0.0.alpha1)
+      activemodel (~> 4.0.0)
+      moped (~> 2.0.beta4)
+      origin (~> 2.0)
+      tzinfo (~> 0.3.37)
+
 GEM
   remote: https://rubygems.org/
   specs:
+    activemodel (4.0.1)
+      activesupport (= 4.0.1)
+      builder (~> 3.1.0)
     activesupport (4.0.1)
       i18n (~> 0.6, >= 0.6.4)
       minitest (~> 4.2)
@@ -13,11 +26,14 @@ GEM
       descendants_tracker (~> 0.0.1)
       ice_nine (~> 0.9)
     backports (3.3.5)
+    bcrypt-ruby (3.1.2)
+    bson (2.0.0)
     builder (3.1.4)
     coderay (1.0.9)
     coercible (0.2.0)
       backports (~> 3.0, >= 3.1.0)
       descendants_tracker (~> 0.0.1)
+    connection_pool (1.2.0)
     descendants_tracker (0.0.3)
     equalizer (0.0.7)
     ffi (1.3.1)
@@ -62,8 +78,14 @@ GEM
     method_source (0.8.2)
     mime-types (2.0)
     minitest (4.7.5)
+    moped (2.0.0.beta4)
+      bson (~> 2.0)
+      connection_pool (~> 1.2)
+      optionable (~> 0.2.0)
     multi_json (1.8.2)
     multi_xml (0.5.5)
+    optionable (0.2.0)
+    origin (2.0.0)
     pry (0.9.12.2)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
@@ -105,12 +127,14 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bcrypt-ruby (~> 3.1.2)
   builder (~> 3.1.0)
   grape
   guard
   guard-rack
   json
   logging
+  mongoid!
   puma
   rack-aggregate
   rack-server-pages

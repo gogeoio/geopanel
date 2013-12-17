@@ -183,8 +183,8 @@ App.controller('CompaniesController', function($scope, $rootScope, $location, $t
       $scope.activateTooltip();
     };
 
-    $scope.isAdmin = $rootScope.user.profile === 'ADMIN';
-    $scope.collapseFiltering = false;
+    $scope.isAdmin = true;
+    $scope.collapseFiltering = true;
 
     $scope.limit = 10;
     $scope.lastLoadedCount = 0;

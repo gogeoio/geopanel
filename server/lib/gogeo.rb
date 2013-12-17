@@ -109,7 +109,7 @@ module Services
             response = @rest[url].get
           end
           
-          @logger.debug("#{method.upcase} " + url)
+          # @logger.info("#{method.upcase} " + url)
           
           limit = response.headers[:pagination_limit].to_i
           offset = response.headers[:pagination_offset].to_i

@@ -1,10 +1,6 @@
-require "companies"
-
 # Geopainel services
 require "account"
-require "company"
-require "list"
-require "user"
+require "services"
 
 # GoGeo SDK
 require "lib/gogeo"
@@ -18,6 +14,7 @@ module Services
 
     before do
       header "Content-Type", "application/json; charset=utf-8"
+      header "Access-Control-Allow-Origin", "*"
 
       @logger = Services::Logger.instance.logger
 
@@ -26,11 +23,11 @@ module Services
       }
 
       if !@gogeo
-        @gogeo = Services::GoGeo.new(options) 
+        @gogeo ||= Services::GoGeo.new(options) 
 
-        databases = @gogeo.databases[:databases]
-        @database_id = databases[0][:id]
-        @database_name = databases[0][:database_name]
+        @databases ||= @gogeo.databases[:databases]
+        @database_id ||= @databases[0][:id]
+        @database_name ||= @databases[0][:database_name]
 
       end
     end
@@ -40,15 +37,11 @@ module Services
       header "Content-Type", "image/png"
 
       dir = File.join(File.dirname(__FILE__), "../../..")
-      ico = File.open(dir + "/favicon.png", "r").read
+      ico = File.open(dir + "/client/geopainel-ui/favicon.ico", "r").read
       ico
     end
 
-    mount Services::Companies
-
     mount Services::AccountAPI
-    mount Services::CompanyAPI
-    mount Services::ListAPI
-    mount Services::UserAPI
+    mount Services::ServicesAPI
   end
 end

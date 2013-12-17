@@ -25,8 +25,21 @@ App.controller('LayoutController', function($scope, $rootScope, $timeout, $locat
     $scope.sidebarClass = 'sidebar-opened';
 
     services.getSession(function(result) {
-      $rootScope.menus = result.menus;
-      $rootScope.user = result.user;
+      if (_.isNull(result.user) || _.isUndefined(result.user) || _.isEmpty(result.user)) {
+        $rootScope.menus = [];
+        $rootScope.user = null;
+        $location.path("/login");
+      } else {
+        if (result.menus) {
+          $rootScope.menus = result.menus;
+        }
+
+        if (result.user) {
+          $rootScope.user = result.user;
+        }
+
+        $location.path("/companies");
+      }
     });
   };
 

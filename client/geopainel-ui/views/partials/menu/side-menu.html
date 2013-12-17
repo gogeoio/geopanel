@@ -8,7 +8,7 @@
       </a>
     </li>
 
-    <li>
+    <li ng-show="menus.indexOf('users') != (-1)">
       <a class="menu-name" href="/#/users" title='Usuários' data-toggle="tooltip" data-placement="right" ng-class="routeStartsWith('/users') && 'active' || ''">
         <i class="icon-user icon-big"></i>
         <span class="title" ng-bind="user.name | cut_string:7"></span>
@@ -22,7 +22,7 @@
       </a>
     </li>
 
-    <li>
+    <li ng-show="user">
       <a href="javascript:" title="Sair" data-toggle="tooltip" data-placement="right" class="top-menu signout-btn" ng-click="logout()">
         <i class="icon-off icon-big"></i>
         <span class="title">Sair</span>

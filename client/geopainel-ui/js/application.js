@@ -22,30 +22,42 @@ App.config(function($routeProvider, $locationProvider) {
         , controller: 'MapController'
       })
       .when('/login', {
-          templateUrl: '/login.html'
+          templateUrl: '/views/controllers/login.html',
+          controller: 'LoginController'
       })
       .otherwise({
-         redirectTo: '/companies'
+         redirectTo: '/login'
       })
       ;
   })
-  .run(function($rootScope, $filter, i18n, globalHelpers) {
+  .run(function($rootScope, $filter, $location, i18n, globalHelpers) {
 
     i18n.init();
     globalHelpers.init();
 
-    $rootScope.$on('event:http-error', function(event, error) {
-      var message = 'Ocorreu um erro, tente novamente mais tarde.';
-      if (error && error.data && error.data.message) {
-        message = error.data.message;
-        
-      } else if (error && error.data) {
-        message = error.data;
+    $rootScope.$on('event:http-error',
+      function(event, error) {
+        var message = 'Ocorreu um erro, tente novamente mais tarde.';
+        if (error && error.data && error.data.message) {
+          message = error.data.message;
+          
+        } else if (error && error.data) {
+          message = error.data;
+        }
+        console.log('http-error ', error);
       }
-      console.log('http-error ', error);
-    });
+    );
 
-    $rootScope.$on('$routeChangeSuccess', function(scope, next, current) {
-      $('.btn').tooltip('hide');
-    });
+    $rootScope.$on('$routeChangeSuccess',
+      function(scope, next, current) {
+        $('.btn').tooltip('hide');
+
+        // if (!$rootScope.user && next && next.$root && !next.$root.$route.controller !== 'LoginController') {
+        //   console.log("scope", scope);
+        //   console.log("current", current);
+        //   console.log("next", next);
+        //   $location.path("/login");
+        // }
+      }
+    );
   });

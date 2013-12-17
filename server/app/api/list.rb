@@ -70,9 +70,6 @@ module Services
           limit: params[:limit]
         }
 
-        @logger.debug("(1)")
-        @logger.debug(JSON.pretty_generate(query))
-
         result = @gogeo.documents_advanced_query(@database_id, collection_id, JSON.generate(query), options)
         documents = result[:documents]
 
@@ -83,44 +80,5 @@ module Services
         {total: total, pages: pages, rows: documents}
       end
     end
-
-    namespace :maps do
-      desc "Map filter"
-      params do
-        requires :id, type: String, desc: "List id"
-        optional :page, type: Integer, default: 1
-        optional :limit, type: Integer, default: 10
-        optional :query, type: String, default: "*"
-      end
-      get "/list/filter" do
-
-        if !params[:query] || params[:query].empty?
-          params[:query] = "*"
-        end
-
-        query = {
-          query: {
-            query_string: {
-              query: params[:query]
-            }
-          }
-        }
-
-        @logger.debug("(2)")
-        @logger.debug(JSON.pretty_generate(query))
-
-        options = {
-          page: params[:page],
-          limit: params[:limit]
-        }
-
-        result = @gogeo.documents_advanced_query(@database_id, params[:id], JSON.generate(query), options)
-
-        documents = result[:documents]
-
-        {total: result[:total], rows: documents}
-      end
-    end
-
   end
 end

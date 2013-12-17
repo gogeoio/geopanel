@@ -1,14 +1,17 @@
 'use strict';
 
-App.factory('services', function ($rootScope, $http) {
+App.factory('services', function ($rootScope, $http, $location) {
   return {
     url : function (path) {
-      var url = "http://localhost:8080/" + path + "?";
+      if (path.slice(0, 1) !== "/") {
+        path = "/" + path;
+      }
+      var url = "http://192.168.88.143:8080" + path + "?";
       return url;
     },
 
     getSession: function(callback) {
-      $http.get(this.url('account/session'))
+      $http.get(this.url('session'))
         .success(callback);
     },
 
@@ -44,6 +47,27 @@ App.factory('services', function ($rootScope, $http) {
         method: 'GET',
         params: params
       }).success(callback);
+    },
+
+    login: function(params, callback) {
+      // $http({url: "/login",
+      //     method: "POST",
+      //     params: params
+      // }).success(callback);
+
+      $http.post(this.url('login'), params)
+      .success(callback);
+    },
+
+    logout: function() {
+      $http({
+        url: this.url('logout'),
+        method: 'GET'
+      }).success(function() {
+        $rootScope.user = null;
+        $rootScope.menus = [];
+        $location.path('/login');
+      })
     }
   };
 });
