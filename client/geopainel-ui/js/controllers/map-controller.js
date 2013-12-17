@@ -10,10 +10,6 @@ App.controller('MapController', function($scope, $rootScope, $http, $routeParams
     sortDir: 'asc',
     sortAttr: 'name',
     limit: 10,
-    map: {
-      host: "http://192.168.88.143:9090",
-      dbname: "db1"
-    },
     center: {
       longitude: -49.25933128592078,
       latitude: -16.670975386982306,
@@ -28,6 +24,8 @@ App.controller('MapController', function($scope, $rootScope, $http, $routeParams
     $scope.createBalloon();
     $scope.calculateListHeight();
     $scope.page = 1;
+
+    $scope.config.map = $rootScope.mapConfig;
 
     services.userLists(function(lists) {
       $scope.company.list = lists;
@@ -132,6 +130,8 @@ App.controller('MapController', function($scope, $rootScope, $http, $routeParams
 
     var layer_name = $scope.company.selected.description;
     var urls = [$scope.config.map.host + "/map/" + $scope.config.map.dbname + "/" + layer_name + "/${z}/${x}/${y}/tile.png?mapkey=123&buffer=16&_=" + Math.random()];
+
+    console.log("url", urls[0]);
 
     if ($scope.layer) {
       $scope.map.removeLayer($scope.layer);

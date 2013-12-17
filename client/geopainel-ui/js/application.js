@@ -51,13 +51,6 @@ App.config(function($routeProvider, $locationProvider) {
     $rootScope.$on('$routeChangeSuccess',
       function(scope, next, current) {
         $('.btn').tooltip('hide');
-
-        // if (!$rootScope.user && next && next.$root && !next.$root.$route.controller !== 'LoginController') {
-        //   console.log("scope", scope);
-        //   console.log("current", current);
-        //   console.log("next", next);
-        //   $location.path("/login");
-        // }
       }
     );
   });

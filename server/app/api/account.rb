@@ -40,7 +40,7 @@ module Services
 
     get :session do
       begin
-        {menus: @menus, user: get_user_with_token(cookies[:token])}
+        {menus: @menus, user: get_user_with_token(cookies[:token]), mapConfig: @map_config}
       rescue Exception => e
         @logger.error("Error in account/session: " + e.message)
       end
@@ -61,7 +61,7 @@ module Services
         user = get_user_with_token(token)
 
         if user
-          return {menus: @menus, user: user}
+          return {menus: @menus, user: user, mapConfig: @map_config}
         end
       end
 
@@ -88,7 +88,7 @@ module Services
         user.remember_tokens << token
         user.save
 
-        return {menus: @menus, user: user}
+        return {menus: @menus, user: user, mapConfig: @map_config}
       else
         error!("Invalid password", 400)
       end

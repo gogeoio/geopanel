@@ -28,8 +28,13 @@ module Services
         @databases ||= @gogeo.databases[:databases]
         @database_id ||= @databases[0][:id]
         @database_name ||= @databases[0][:database_name]
-
       end
+
+      @map_config ||= {
+        host: AppConfig.map.host,
+        dbname: AppConfig.database_name
+      }
+
     end
 
     get "/favicon.ico" do

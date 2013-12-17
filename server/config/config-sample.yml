@@ -3,7 +3,10 @@ defaults: &defaults
   gogeo_api: app.gogeo.io
   gogeo_map: maps.gogeo.io
   database_id: 
+  database_name: 
   collection_id: 
+  map_config:
+    host: 
   apikey: 
   mapkey: 
   logger:
