@@ -20,8 +20,8 @@ module Services
           user: options[:api_key],
           password: ""
         },
-        timeout: 10,
-        open_timeout: 10
+        timeout: 20,
+        open_timeout: 20
       )
     end
 

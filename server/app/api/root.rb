@@ -39,7 +39,8 @@ module Services
 
       @map_config ||= {
         host: AppConfig.gogeo.map_url,
-        dbname: AppConfig.database_name
+        dbname: AppConfig.database_name,
+        mapkey: AppConfig.gogeo.map_key
       }
 
     end

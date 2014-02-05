@@ -90,7 +90,6 @@ module Services
 
         return {menus: @menus, user: user, gogeoConfig: @map_config}
       else
-        puts "error: sakdljfalsdkjf"
         error!("Invalid password", 400)
       end
     end

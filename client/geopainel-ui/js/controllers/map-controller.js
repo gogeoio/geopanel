@@ -129,7 +129,8 @@ App.controller('MapController', function($scope, $rootScope, $http, $routeParams
     var filter = '';
 
     var layer_name = $scope.company.selected.description;
-    var urls = [$scope.config.gogeoConfig.host + "/map/" + $scope.config.gogeoConfig.dbname + "/" + layer_name + "/${z}/${x}/${y}/tile.png?mapkey=123&buffer=16&_=" + Math.random()];
+    var mapkey = $scope.config.gogeoConfig.mapkey;
+    var urls = [$scope.config.gogeoConfig.host + "/map/" + $scope.config.gogeoConfig.dbname + "/" + layer_name + "/${z}/${x}/${y}/tile.png?mapkey=" + mapkey + "&buffer=16&_=" + Math.random()];
 
     if ($scope.layer) {
       $scope.map.removeLayer($scope.layer);
