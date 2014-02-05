@@ -8,19 +8,21 @@ module Services
       @logger = Services::Logger.instance.logger
 
       defaults = {
-        base_path: "http://localhost:9292/v1"
+        api_url: "https://api.gogeo.io/v1"
       }
 
       options = defaults.merge(options)
 
       @rest = RestClient::Resource.new(
-          options[:base_path],
-          {
-            headers: { accept: :json, content_type: :json },
-            user: options[:api_key],
-            password: ""
-          }
-        )
+        options[:api_url],
+        {
+          headers: { accept: :json, content_type: :json },
+          user: options[:api_key],
+          password: ""
+        },
+        timeout: 10,
+        open_timeout: 10
+      )
     end
 
     def databases(options={})
@@ -109,8 +111,6 @@ module Services
             response = @rest[url].get
           end
           
-          # @logger.info("#{method.upcase} " + url)
-          
           limit = response.headers[:pagination_limit].to_i
           offset = response.headers[:pagination_offset].to_i
           total_count = response.headers[:pagination_totalcount].to_i
@@ -120,9 +120,11 @@ module Services
           result = {limit: limit, offset: offset, total: total_count}
           result[name.to_sym] = resource
           result
+        rescue OpenSSL::SSL::SSLError => e
+          raise StandardError.new(e.class.to_s + ": " + e.message)
         rescue Exception => e
-          @logger.error("Error in execute #{method} request #{name} " + e.message)
-          @logger.debug(e.inspect)
+          @logger.error(e.class.to_s + ": Error in execute #{method} request #{name} " + e.message)
+          @logger.error("url: " + url)
           nil
         end
       end

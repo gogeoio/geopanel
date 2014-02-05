@@ -1,28 +1,27 @@
 defaults: &defaults
   <<: *defaults
-  gogeo_api: app.gogeo.io
-  gogeo_map: maps.gogeo.io
   database_id: 
   database_name: 
-  collection_id: 
-  map_config:
-    host: 
-  apikey: 
-  mapkey: 
+  gogeo:
+    api_url: https://api.gogeo.io/v1
+    map_url: https://maps.gogeo.io
+    api_key: 
+    map_key: 
   logger:
-    name: showcase
+    name: gogeo-showcase
     level: debug
     appenders:
       stdout: true
-      file: ./showcase.log
+      file: ./gogeo-showcase.log
 
 development:
   <<: *defaults
-  gogeo_api: localhost:9292
-  gogeo_map: localhost:9090
 
 test:
   <<: *defaults
 
 production:
   <<: *defaults
+  logger:
+    appenders:
+      file: /var/log/gogeo-showcase.log

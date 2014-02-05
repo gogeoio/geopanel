@@ -38,9 +38,8 @@ App.controller('LayoutController', function($scope, $rootScope, $timeout, $locat
           $rootScope.user = result.user;
         }
 
-        if (result.mapConfig) {
-          console.log("mapConfig", result.mapConfig);
-          $rootScope.mapConfig = result.mapConfig;
+        if (result.gogeoConfig) {
+          $rootScope.gogeoConfig = result.gogeoConfig;
         }
 
         $location.path("/companies");

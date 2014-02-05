@@ -25,7 +25,7 @@ App.controller('MapController', function($scope, $rootScope, $http, $routeParams
     $scope.calculateListHeight();
     $scope.page = 1;
 
-    $scope.config.map = $rootScope.mapConfig;
+    $scope.config.gogeoConfig = $rootScope.gogeoConfig;
 
     services.userLists(function(lists) {
       $scope.company.list = lists;
@@ -129,9 +129,7 @@ App.controller('MapController', function($scope, $rootScope, $http, $routeParams
     var filter = '';
 
     var layer_name = $scope.company.selected.description;
-    var urls = [$scope.config.map.host + "/map/" + $scope.config.map.dbname + "/" + layer_name + "/${z}/${x}/${y}/tile.png?mapkey=123&buffer=16&_=" + Math.random()];
-
-    console.log("url", urls[0]);
+    var urls = [$scope.config.gogeoConfig.host + "/map/" + $scope.config.gogeoConfig.dbname + "/" + layer_name + "/${z}/${x}/${y}/tile.png?mapkey=123&buffer=16&_=" + Math.random()];
 
     if ($scope.layer) {
       $scope.map.removeLayer($scope.layer);

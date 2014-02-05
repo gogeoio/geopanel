@@ -40,7 +40,7 @@ module Services
 
     get :session do
       begin
-        {menus: @menus, user: get_user_with_token(cookies[:token]), mapConfig: @map_config}
+        {menus: @menus, user: get_user_with_token(cookies[:token]), gogeoConfig: @map_config}
       rescue Exception => e
         @logger.error("Error in account/session: " + e.message)
       end
@@ -54,6 +54,7 @@ module Services
       requires :email, type: String, desc: "Email"
       requires :password, type: String, desc: "Password"
     end
+
     post :login do
       token = cookies[:token]
 
@@ -61,7 +62,7 @@ module Services
         user = get_user_with_token(token)
 
         if user
-          return {menus: @menus, user: user, mapConfig: @map_config}
+          return {menus: @menus, user: user, gogeoConfig: @map_config}
         end
       end
 
@@ -88,7 +89,7 @@ module Services
         user.remember_tokens << token
         user.save
 
-        return {menus: @menus, user: user, mapConfig: @map_config}
+        return {menus: @menus, user: user, gogeoConfig: @map_config}
       else
         error!("Invalid password", 400)
       end

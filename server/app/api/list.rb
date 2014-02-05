@@ -14,10 +14,15 @@ module Services
     namespace :lists do
 
       get "/" do
-        result = @gogeo.collections(@database_id)
-        total = result[:total]
-        collections = result[:collections]
-        {total: total, rows: collections}
+        begin
+          result = @gogeo.collections(@database_id)
+          total = result[:total]
+          collections = result[:collections]
+          {total: total, rows: collections}
+          
+        rescue Exception => e
+          error!("GoGeoError: " + e.message, 400)
+        end
       end
 
       # -------------------------------------------------------------- #
@@ -32,6 +37,7 @@ module Services
         optional :cnae_fields, type: Array, default: [ "cnae_primario", "cnae_p_label" ], desc: "Filtered cnae fields"
       end
       get ":id" do
+
         collection_id = params[:id]
 
         if !params[:location] || params[:location].empty?

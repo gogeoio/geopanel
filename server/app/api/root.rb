@@ -19,19 +19,26 @@ module Services
       @logger = Services::Logger.instance.logger
 
       options = {
-        api_key: "84ba79ce-3702-427a-816f-efa3fa76e0b1"
+        api_url: AppConfig.gogeo.api_url,
+        api_key: AppConfig.gogeo.api_key
       }
 
-      if !@gogeo
-        @gogeo ||= Services::GoGeo.new(options) 
+      begin
+        if !@gogeo
+          @gogeo ||= Services::GoGeo.new(options) 
 
-        @databases ||= @gogeo.databases[:databases]
-        @database_id ||= @databases[0][:id]
-        @database_name ||= @databases[0][:database_name]
+          @databases ||= @gogeo.databases[:databases]
+          @database_id ||= @databases[0][:id]
+          @database_name ||= @databases[0][:database_name]
+        end
+      rescue Errno::ECONNREFUSED => e
+        @logger.error("Conexão recusada com a plataforma")
+      rescue Exception => e
+        @logger.error(e.class.to_s + ": " + e.message)
       end
 
       @map_config ||= {
-        host: AppConfig.map.host,
+        host: AppConfig.gogeo.map_url,
         dbname: AppConfig.database_name
       }
 
