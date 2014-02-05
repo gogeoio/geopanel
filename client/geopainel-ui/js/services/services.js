@@ -6,7 +6,16 @@ App.factory('services', function ($rootScope, $http, $location) {
       if (path.slice(0, 1) !== "/") {
         path = "/" + path;
       }
-      var url = "http://192.168.88.143:8080" + path + "?";
+
+      var protocol = $location.protocol();
+      var host = $location.host();
+      var port = $location.port();
+
+      var basePath = protocol + '://' + host + ':' + port;
+
+      var url = basePath + path + "?";
+      console.log('url', url);
+
       return url;
     },
 

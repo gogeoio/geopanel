@@ -54,7 +54,6 @@ module Services
       requires :email, type: String, desc: "Email"
       requires :password, type: String, desc: "Password"
     end
-
     post :login do
       token = cookies[:token]
 
@@ -91,6 +90,7 @@ module Services
 
         return {menus: @menus, user: user, gogeoConfig: @map_config}
       else
+        puts "error: sakdljfalsdkjf"
         error!("Invalid password", 400)
       end
     end
