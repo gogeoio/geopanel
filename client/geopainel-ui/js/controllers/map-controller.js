@@ -19,13 +19,13 @@ App.controller('MapController', function($scope, $rootScope, $http, $routeParams
 
   $scope.init = function() {
 
+    $scope.config.gogeoConfig = $rootScope.gogeoConfig;
+
     $scope.setupMap();
     $scope.balloonScope = $scope.$new();
     $scope.createBalloon();
     $scope.calculateListHeight();
     $scope.page = 1;
-
-    $scope.config.gogeoConfig = $rootScope.gogeoConfig;
 
     services.userLists(function(lists) {
       $scope.company.list = lists;
